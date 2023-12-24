@@ -1,3 +1,4 @@
+using BS.Clientes.API.Configuration;
 using NSE.Catalogo.API.Configuration;
 using System.Reflection;
 
@@ -10,6 +11,8 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Get
 builder.Services.RegisterServices();
 
 builder.Services.AddSwaggerConfiguration();
+
+builder.Services.AddMessageBusConfiguration(builder.Configuration);
 
 var app = builder.Build();
 

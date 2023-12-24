@@ -8,6 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.0" />
@@ -16,8 +17,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\BS.WebAPI.Core\BS.WebAPI.Core.csproj" />
-		<ProjectReference Include="..\src\building-blocks\BS.Core\BS.Core.csproj" />
+	  <ProjectReference Include="..\..\building-blocks\BS.Core\BS.Core.csproj" />
+	  <ProjectReference Include="..\..\building-blocks\BS.MessageBus\BS.MessageBus.csproj" />
+	  <ProjectReference Include="..\..\building-blocks\BS.WebAPI.Core\BS.WebAPI.Core.csproj" />
 	</ItemGroup>
 
 </Project>

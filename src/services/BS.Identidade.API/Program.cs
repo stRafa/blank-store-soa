@@ -12,6 +12,8 @@ builder.Services.AddApiConfiguration();
 
 builder.Services.AddSwaggerConfiguration();
 
+builder.Services.AddMessageBusConfiguration(builder.Configuration);
+
 var app = builder.Build();
 
 app.UseSwaggerConfiguration();
@@ -19,5 +21,4 @@ app.UseSwaggerConfiguration();
 app.UseApiConfiguration();
 
 app.Run();
-// why is happening: Could not load assembly 'BS.Catalogo.API'. Ensure it is referenced by the startup project 'BS.Identidade.API'.
 

@@ -20,11 +20,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\BS.WebAPI.Core\BS.WebAPI.Core.csproj" />
-	  <ProjectReference Include="..\..\building-blocks\BS.Core\BS.Core.csproj" />
+	  <Folder Include="Configuration\" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Configuration\" />
+	  <ProjectReference Include="..\..\building-blocks\BS.Core\BS.Core.csproj" />
+	  <ProjectReference Include="..\..\building-blocks\BS.WebAPI.Core\BS.WebAPI.Core.csproj" />
 	</ItemGroup>
 </Project>
