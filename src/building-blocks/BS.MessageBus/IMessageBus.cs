@@ -1,9 +1,12 @@
 ﻿using BS.Core.Messages.Integration;
+using EasyNetQ;
 
 namespace BS.MessageBus
 {
     public interface IMessageBus : IDisposable
     {
+        bool IsConnected { get; }
+        IAdvancedBus AdvancedBus { get; }
         void Publish<T>(T message) where T : IntegrationEvent;
         Task PublishAsync<T>(T message) where T : IntegrationEvent;
         void Subscribe<T>(string subscriptionId, Action<T> onMessage) where T : class;
@@ -12,7 +15,5 @@ namespace BS.MessageBus
         Task<TResponse> RequestAsync<TRequest, TResponse>(TRequest request) where TRequest : IntegrationEvent where TResponse : ResponseMessage;
         IDisposable Respond<TRequest, TResponse>(Func<TRequest, TResponse> responder) where TRequest : IntegrationEvent where TResponse : ResponseMessage;
         Task<IDisposable> RespondAsync<TRequest, TResponse>(Func<TRequest, Task<TResponse>> responder) where TRequest : IntegrationEvent where TResponse : ResponseMessage;
-
-        bool IsConnected { get; }
     }
 }

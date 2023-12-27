@@ -1,8 +1,8 @@
 ﻿using BS.Core.Messages.Integration;
 using BS.Identidade.API.Extensions;
 using BS.Identidade.API.Models;
+using BS.MessageBus;
 using BS.WebAPI.Core.Identidade;
-using EasyNetQ;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,25 +10,20 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using BS.Core.Utils;
 using System.Text;
+using BS.WebAPI.Core.Controllers;
 
 namespace BS.Identidade.API.Controllers
 {
     [Route("api/[controller]")]
-    public class AuthController : MainController
+    public class AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IOptions<AppSettings> appSettings, IMessageBus bus) : MainController
     {
 
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly AppSettings _appSettings;
-        private IBus _bus;
-
-        public AuthController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IOptions<AppSettings> appSettings)
-        {
-            _signInManager = signInManager;
-            _userManager = userManager;
-            _appSettings = appSettings.Value;
-        }
+        private readonly SignInManager<IdentityUser> _signInManager = signInManager;
+        private readonly UserManager<IdentityUser> _userManager = userManager;
+        private readonly AppSettings _appSettings = appSettings.Value;
+        private IMessageBus _bus = bus;
 
         [HttpPost("register")]
         [AllowAnonymous]
@@ -47,7 +42,13 @@ namespace BS.Identidade.API.Controllers
 
             if (result.Succeeded)
             {
-                var sucesso = await RegistrarCliente(usuarioRegistro);
+                var clienteResult = await RegistrarCliente(usuarioRegistro);
+
+                if (!clienteResult.ValidationResult.IsValid)
+                {
+                    await _userManager.DeleteAsync(user);
+                    return CustomResponse(clienteResult.ValidationResult);
+                }
 
                 return CustomResponse(await GerarJwt(usuarioRegistro.Email));
             }
@@ -149,11 +150,15 @@ namespace BS.Identidade.API.Controllers
 
             var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(Guid.Parse(usuario!.Id), usuarioRegistro.Nome, usuarioRegistro.Email, usuarioRegistro.Cpf);
 
-            _bus = RabbitHutch.CreateBus("host=localhost:5672");
-
-            var sucesso = await _bus.Rpc.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
-
-            return sucesso;
+            try 
+            { 
+                return await _bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
+            }
+            catch
+            {
+                await _userManager.DeleteAsync(usuario);
+                throw;
+            }
         }
     }
 }

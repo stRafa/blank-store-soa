@@ -2,7 +2,7 @@
 using BS.WebAPI.Core.Identidade;
 using Microsoft.EntityFrameworkCore;
 
-namespace NSE.Catalogo.API.Configuration
+namespace BS.Clientes.API.Configuration
 {
     public static class ApiConfig
     {

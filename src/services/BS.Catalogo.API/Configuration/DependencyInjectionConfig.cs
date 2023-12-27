@@ -3,7 +3,7 @@ using BS.Catalogo.API.Data;
 using BS.Catalogo.API.Data.Repository;
 using BS.Catalogo.API.Models;
 
-namespace NSE.Catalogo.API.Configuration
+namespace BS.Catalogo.API.Configuration
 {
     public static class DependencyInjectionConfig
     {

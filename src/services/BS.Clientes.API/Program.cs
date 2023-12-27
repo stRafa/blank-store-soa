@@ -1,5 +1,4 @@
 using BS.Clientes.API.Configuration;
-using NSE.Catalogo.API.Configuration;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

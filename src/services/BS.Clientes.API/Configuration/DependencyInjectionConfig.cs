@@ -8,7 +8,7 @@ using BS.Core.Mediator;
 using FluentValidation.Results;
 using MediatR;
 
-namespace NSE.Catalogo.API.Configuration
+namespace BS.Clientes.API.Configuration
 {
     public static class DependencyInjectionConfig
     {

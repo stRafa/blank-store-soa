@@ -1,9 +1,6 @@
-﻿using System;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Models;
 
-namespace NSE.Catalogo.API.Configuration
+namespace BS.Catalogo.API.Configuration
 {
     public static class SwaggerConfig
     {

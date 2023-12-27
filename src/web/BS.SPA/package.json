@@ -1,9 +1,9 @@
 {
-  "name": "bs.spa",
+  "name": "ngrxapp",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host=127.0.0.1",
+    "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -18,10 +18,12 @@
     "@angular/platform-browser": "^17.0.0",
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
+    "@ngrx/effects": "^17.0.1",
+    "@ngrx/store": "^17.0.1",
+    "@ngrx/store-devtools": "^17.0.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.14.2",
-    "jest-editor-support": "*"
+    "zone.js": "~0.14.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.0.3",

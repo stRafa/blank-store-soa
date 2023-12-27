@@ -1,7 +1,7 @@
 ﻿using BS.Clientes.API.Application.Commands;
 using BS.Clientes.API.Models;
 using BS.Core.Mediator;
-using BS.Identidade.API.Controllers;
+using BS.WebAPI.Core.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BS.Clientes.API.Controllers

@@ -1,5 +1,5 @@
 ﻿using BS.Catalogo.API.Models;
-using BS.Identidade.API.Controllers;
+using BS.WebAPI.Core.Controllers;
 using BS.WebAPI.Core.Identidade;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

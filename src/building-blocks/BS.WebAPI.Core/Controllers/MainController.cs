@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using BS.Core.Communication;
 
-namespace BS.Identidade.API.Controllers
+namespace BS.WebAPI.Core.Controllers
 {
     [ApiController]
     [Authorize]
@@ -41,6 +42,26 @@ namespace BS.Identidade.API.Controllers
             return CustomResponse();
         }
 
+        protected ActionResult CustomResponse(ResponseResult responseResult)
+        {
+            ResponsePossuiErros(responseResult);
+
+            return CustomResponse();
+        }
+
+        protected bool ResponsePossuiErros(ResponseResult responseResult)
+        {
+            if (responseResult != null && responseResult.Errors.Messages.Any())
+            {
+                foreach (var mensagem in responseResult.Errors.Messages)
+                {
+                    AdicionarErroProcessamento(mensagem);
+                }
+                return true;
+            }
+            return false;
+        }
+
         protected bool OperacaoValida() => Erros.Count == 0;
 
         protected void AdicionarErroProcessamento(string erro) => Erros.Add(erro);
@@ -48,6 +69,6 @@ namespace BS.Identidade.API.Controllers
         protected void AdicionarErroProcessamento(Exception erro) => Erros.Add(erro.Message);
 
         protected void LimparErrosProcessamento() => Erros.Clear();
-        
+
     }
 }
