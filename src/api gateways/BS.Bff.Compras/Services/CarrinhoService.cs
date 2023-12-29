@@ -45,5 +45,12 @@ namespace BS.Compras.BFF.Services
             TratarErrosResponse(response);
             return await DeserializarObjetoResponse<ResponseResult>(response);
         }
+
+        public async Task<ResponseResult> AplicarVoucherCarrinho(VoucherDTO voucher)
+        {
+            var response = await _httpClient.PostAsync("/carrinho/aplicar-voucher", ObterConteudo(voucher));
+            TratarErrosResponse(response);
+            return await DeserializarObjetoResponse<ResponseResult>(response);
+        }
     }
 }
